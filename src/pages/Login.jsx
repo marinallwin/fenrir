@@ -6,12 +6,35 @@ import ThemeToggle from '../components/common/ThemeToggle';
 
 const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [formData, setFormData] = React.useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    termsAccepted: false
+  });
   const navigate = useNavigate();
+
+  // Check if all required fields are filled
+  const isFormValid = formData.firstName.trim() !== '' && 
+                     formData.lastName.trim() !== '' && 
+                     formData.email.trim() !== '' && 
+                     formData.password.trim() !== '' && 
+                     formData.termsAccepted;
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Navigate to dashboard after form submission
-    navigate('/dashboard');
+    if (isFormValid) {
+      // Navigate to dashboard after form submission
+      navigate('/dashboard');
+    }
   };
 
   return (
@@ -117,6 +140,8 @@ const Login = () => {
                     <input
                       type="text"
                       placeholder="First name*"
+                      value={formData.firstName}
+                      onChange={(e) => handleInputChange('firstName', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 bg-gray-50 text-gray-900 placeholder-gray-500 transition-all duration-200 text-sm font-medium resize-none h-9 sm:h-10 box-border"
                     />
                   </div>
@@ -125,6 +150,8 @@ const Login = () => {
                     <input
                       type="text"
                       placeholder="Last name*"
+                      value={formData.lastName}
+                      onChange={(e) => handleInputChange('lastName', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 bg-gray-50 text-gray-900 placeholder-gray-500 transition-all duration-200 text-sm font-medium resize-none h-9 sm:h-10 box-border"
                     />
                   </div>
@@ -133,6 +160,8 @@ const Login = () => {
                     <input
                       type="email"
                       placeholder="Email address*"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 bg-gray-50 text-gray-900 placeholder-gray-500 transition-all duration-200 text-sm font-medium resize-none h-9 sm:h-10 box-border"
                     />
                   </div>
@@ -141,6 +170,8 @@ const Login = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="Password (8+ characters)*"
+                      value={formData.password}
+                      onChange={(e) => handleInputChange('password', e.target.value)}
                       className="w-full px-3 py-2 pr-9 sm:pr-10 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 bg-gray-50 text-gray-900 placeholder-gray-500 transition-all duration-200 text-sm font-medium resize-none h-9 sm:h-10 box-border"
                     />
                     <button
@@ -167,6 +198,8 @@ const Login = () => {
                     <input
                       type="checkbox"
                       id="terms"
+                      checked={formData.termsAccepted}
+                      onChange={(e) => handleInputChange('termsAccepted', e.target.checked)}
                       className="mt-0.5 w-3.5 h-3.5 text-teal-500 border-gray-300 rounded focus:ring-teal-500/20 flex-shrink-0"
                     />
                     <label htmlFor="terms" className="text-xs text-gray-600 leading-relaxed">
@@ -184,7 +217,12 @@ const Login = () => {
                   <div className="pt-2">
                     <button 
                       type="submit"
-                      className="w-full h-9 sm:h-10 bg-teal-500 hover:bg-teal-600 active:bg-teal-700 text-white text-sm font-semibold rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 shadow-lg hover:shadow-xl hover:-translate-y-0.5 px-3"
+                      disabled={!isFormValid}
+                      className={`w-full h-9 sm:h-10 text-white text-sm font-semibold rounded-full transition-all duration-200 focus:outline-none px-3 ${
+                        isFormValid 
+                          ? 'bg-teal-500 hover:bg-teal-600 active:bg-teal-700 focus:ring-2 focus:ring-teal-500/20 shadow-lg hover:shadow-xl hover:-translate-y-0.5 cursor-pointer' 
+                          : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed opacity-60'
+                      }`}
                     >
                       Create account
                     </button>
