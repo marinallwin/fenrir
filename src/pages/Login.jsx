@@ -15,18 +15,36 @@ const Login = () => {
   });
   const navigate = useNavigate();
 
-  // Check if all required fields are filled
+  // Validation functions
+  const validateEmail = (email) => {
+    // Standard email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return email.trim() !== '' && emailRegex.test(email);
+  };
+
+  // Check if all required fields are filled and valid
   const isFormValid = formData.firstName.trim() !== '' && 
                      formData.lastName.trim() !== '' && 
-                     formData.email.trim() !== '' && 
+                     validateEmail(formData.email) && 
                      formData.password.trim() !== '' && 
+                     formData.password.length >= 8 &&
                      formData.termsAccepted;
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
+    // For name fields, filter out numbers and special characters (except spaces, hyphens, apostrophes)
+    if (field === 'firstName' || field === 'lastName') {
+      // Only allow letters, spaces, hyphens, and apostrophes
+      const filteredValue = value.replace(/[^a-zA-Z\s\-']/g, '');
+      setFormData(prev => ({
+        ...prev,
+        [field]: filteredValue
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [field]: value
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -50,7 +68,7 @@ const Login = () => {
           <div className="relative z-10 p-6 lg:p-8 xl:p-12 flex flex-col justify-between text-white w-full max-w-lg xl:max-w-xl 2xl:max-w-2xl">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-lg">a</span>
               </div>
               <span className="text-xl font-semibold">aps</span>
@@ -111,7 +129,7 @@ const Login = () => {
           <div className="w-full max-w-md lg:max-w-none">
             {/* Mobile logo - only show on small screens */}
             <div className="lg:hidden flex items-center justify-center space-x-3 mb-6">
-              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-lg">a</span>
               </div>
               <span className="text-xl font-semibold text-white">aps</span>
@@ -162,8 +180,15 @@ const Login = () => {
                       placeholder="Email address*"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 bg-gray-50 text-gray-900 placeholder-gray-500 transition-all duration-200 text-sm font-medium resize-none h-9 sm:h-10 box-border"
+                      className={`w-full px-3 py-2 border rounded-lg sm:rounded-xl focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 bg-gray-50 text-gray-900 placeholder-gray-500 transition-all duration-200 text-sm font-medium resize-none h-9 sm:h-10 box-border ${
+                        formData.email && !validateEmail(formData.email) 
+                          ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' 
+                          : 'border-gray-200'
+                      }`}
                     />
+                    {formData.email && !validateEmail(formData.email) && (
+                      <p className="text-red-500 text-xs mt-1">Please enter a valid email address</p>
+                    )}
                   </div>
 
                   <div className="relative">
@@ -172,7 +197,11 @@ const Login = () => {
                       placeholder="Password (8+ characters)*"
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
-                      className="w-full px-3 py-2 pr-9 sm:pr-10 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 bg-gray-50 text-gray-900 placeholder-gray-500 transition-all duration-200 text-sm font-medium resize-none h-9 sm:h-10 box-border"
+                      className={`w-full px-3 py-2 pr-9 sm:pr-10 border rounded-lg sm:rounded-xl focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 bg-gray-50 text-gray-900 placeholder-gray-500 transition-all duration-200 text-sm font-medium resize-none h-9 sm:h-10 box-border ${
+                        formData.password && formData.password.length < 8 
+                          ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' 
+                          : 'border-gray-200'
+                      }`}
                     />
                     <button
                       type="button"
@@ -192,6 +221,9 @@ const Login = () => {
                         </svg>
                       )}
                     </button>
+                    {formData.password && formData.password.length < 8 && (
+                      <p className="text-red-500 text-xs mt-1">Password must be at least 8 characters long</p>
+                    )}
                   </div>
 
                   <div className="flex items-start space-x-2 pt-1">
