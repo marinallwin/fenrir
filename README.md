@@ -1,125 +1,115 @@
-# Security Platform UI
+Security Platform UI
 
-A modern, responsive React application for a B2B SaaS security platform built with Vite, React, and Tailwind CSS.
+This project is a responsive React application that recreates the UI of a B2B SaaS security platform. The goal was to closely match the provided design reference while keeping the code clean, reusable, and easy to maintain.
 
-## Features Implemented
+The app is built using React, Vite, and Tailwind CSS, with a focus on visual accuracy, responsiveness, and proper component structure.
 
-### ✅ Login/Sign-up Screen
-- Split-layout design with gradient background
-- Responsive form with validation-ready inputs
-- Social login buttons (Apple, Google, Meta)
-- Theme toggle functionality
-- Mobile-responsive design
+What’s Included
+Login / Sign-up Screen
 
-### ✅ Dashboard Screen
-- Sidebar navigation with collapsible functionality
-- Statistics overview cards with severity-based coloring
-- Interactive scan table with search functionality
-- Responsive design (desktop table view, mobile card view)
-- Toast notifications for user feedback
-- Theme switching (light/dark mode)
+Split layout with a gradient left section and a form card on the right
 
-### ✅ Navigation & Routing
-- React Router implementation
-- Protected route structure
-- Navigation between Login → Dashboard → Scan Detail
-- Active navigation highlighting
+Fields for first name, last name, email, and password
 
-### ✅ Component Library
-- Reusable UI components (Button, Badge, StatusChip, ProgressBar)
-- Theme system with context provider
-- Responsive layout components
-- Toast notification system
+Social login buttons (Apple, Google, Meta)
 
-### ✅ Mock Data Integration
-- Realistic scan data with varied statuses
-- Vulnerability statistics
-- Formatted timestamps and progress indicators
+Light and dark theme toggle
 
-## Tech Stack
+Fully responsive layout
 
-- **React 19** - UI framework
-- **Vite** - Build tool and dev server
-- **Tailwind CSS v4** - Styling framework
-- **React Router** - Client-side routing
-- **Lucide React** - Icon library
-- **Vitest** - Testing framework (configured)
+Dashboard
 
-## Getting Started
+Sidebar navigation with active link highlighting
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+Severity overview cards (Critical, High, Medium, Low)
 
-2. Start development server:
-   ```bash
-   npm run dev
-   ```
+Scan table with search functionality
 
-3. Build for production:
-   ```bash
-   npm run build
-   ```
+Status chips and colored vulnerability badges
 
-## Project Structure
+Responsive layout (table view on desktop, card layout on mobile)
 
-```
+Toast feedback for interactive buttons
+
+Navigation
+
+Implemented using React Router
+
+Login → Dashboard → Scan Detail navigation flow
+
+Protected routing structure
+
+Reusable Components
+
+Button
+
+Badge (severity-based)
+
+StatusChip
+
+ProgressBar
+
+Theme toggle with context
+
+Toast notification system
+
+Mock Data
+
+All data is locally mocked using structured JSON files.
+Scan entries include varied statuses, timestamps, and vulnerability counts to simulate realistic usage.
+
+Tech Stack
+
+React
+
+Vite
+
+Tailwind CSS
+
+React Router
+
+Lucide React
+
+Vitest (configured)
+
+How to Run
+
+Install dependencies:
+
+npm install
+
+Start development server:
+
+npm run dev
+
+Build for production:
+
+npm run build
+Project Structure
 src/
-├── components/
-│   ├── common/          # Reusable UI components
-│   ├── dashboard/       # Dashboard-specific components
-│   └── layout/          # Layout components (Sidebar, Header)
-├── pages/               # Page components
-├── context/             # React contexts (Theme)
-├── hooks/               # Custom hooks
-├── data/                # Mock data
-├── utils/               # Utility functions
-└── config/              # Configuration files
-```
+  components/
+    common/
+    dashboard/
+    layout/
+  pages/
+  context/
+  hooks/
+  data/
+  utils/
+  config/
+Notes
 
-## Features
+The application uses functional components and hooks throughout.
+The theme system supports both light and dark modes and applies styles consistently across all screens.
 
-### Responsive Design
-- Mobile-first approach
-- Breakpoints: 375px (mobile), 768px (tablet), 1280px+ (desktop)
-- Collapsible sidebar on mobile
-- Responsive table → card layout transformation
+The main focus of this implementation was:
 
-### Theme System
-- Light and dark mode support
-- Persistent theme selection
-- Smooth transitions between themes
-- Consistent color palette
+Visual consistency
 
-### Interactive Elements
-- Hover states on all interactive elements
-- Toast notifications for user feedback
-- Search functionality with real-time filtering
-- Clickable table rows for navigation
+Responsive behavior
 
-## Next Steps
+Reusable components
 
-The following features are planned for future implementation:
-- [ ] Active Scan Detail screen with live console
-- [ ] Finding log with vulnerability cards
-- [ ] Advanced filtering and column customization
-- [ ] Real-time updates and WebSocket integration
-- [ ] User authentication and session management
-- [ ] API integration
+Clean structure
 
-## Development
-
-The application is built with modern React patterns:
-- Functional components with hooks
-- Context for global state management
-- Custom hooks for reusable logic
-- Responsive design with Tailwind CSS
-- Component composition and reusability
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+Additional features like backend integration, authentication, and real-time updates can be added in future iterations.
